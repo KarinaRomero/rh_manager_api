@@ -10,27 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_19_064918) do
+ActiveRecord::Schema.define(version: 2018_12_19_194007) do
 
   create_table "employees", force: :cascade do |t|
-    t.string "clave"
-    t.string "name"
+    t.string "key", null: false
+    t.string "name", null: false
     t.integer "age"
     t.text "job"
     t.text "adress"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["key"], name: "index_employees_on_key", unique: true
   end
 
   create_table "employees_skills", id: false, force: :cascade do |t|
-    t.integer "employee_id"
-    t.integer "skill_id"
-    t.index ["employee_id"], name: "index_employees_skills_on_employee_id"
-    t.index ["skill_id"], name: "index_employees_skills_on_skill_id"
+    t.integer "employee_id", null: false
+    t.integer "skill_id", null: false
+    t.index ["employee_id", "skill_id"], name: "index_employees_skills_on_employee_id_and_skill_id"
+    t.index ["skill_id", "employee_id"], name: "index_employees_skills_on_skill_id_and_employee_id"
   end
 
   create_table "skills", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -62,6 +63,7 @@ ActiveRecord::Schema.define(version: 2018_12_19_064918) do
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["rfc"], name: "index_users_on_rfc", unique: true
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
