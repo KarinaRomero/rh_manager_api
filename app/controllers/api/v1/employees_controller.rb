@@ -21,10 +21,10 @@ module Api
             end
             def update
                 @employee = Employee.find(params[:id])
-                if @employee.update_attributes(employee_params)
+                if @employee.update_attributes(key:params[:key], name:params[:name], age:params[:age], job:params[:job], adress:params[:adress], skill_ids:params[:skill_ids])
                     #render status: :updated
                 else
-                    #render json: @skill.errors, status: :unprocessable_entity
+                    render json: @skill.errors, status: :unprocessable_entity
                 end
             end
             def destroy

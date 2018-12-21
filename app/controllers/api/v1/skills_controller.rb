@@ -1,7 +1,7 @@
 module Api
     module V1
         class SkillsController < ApplicationController
-            before_action :authenticate_user!, :only => [:index, :create, :show, :update]
+            before_action :authenticate_user!, :only => [:index, :create, :show, :update, :edit]
             def index
                 @skills = Skill.all
                 render json: @skills
@@ -25,6 +25,10 @@ module Api
                 else
                     #render json: @skill.errors, status: :unprocessable_entity
                 end
+            end
+            def edit
+                @skills = Skill.all(:joins => :assignments, :conditions => {:assignments => {:id_employee => params[:id]}})
+                render json: @skills
             end
             private
             def skill_params

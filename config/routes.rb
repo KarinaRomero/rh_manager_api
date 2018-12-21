@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     namespace 'v1' do
       resources :skills
       resources :employees
+      resources :assignments
     end
   end
   end
