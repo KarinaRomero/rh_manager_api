@@ -40,6 +40,8 @@ class DeviseTokenAuthCreateUsers < ActiveRecord::Migration[5.2]
       t.string :rfc
       t.string :company
       t.string :email
+      t.string :confirm_success_url
+      t.string :registration
 
       ## Tokens
       t.text :tokens

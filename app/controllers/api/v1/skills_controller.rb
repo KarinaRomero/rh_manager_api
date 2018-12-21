@@ -1,6 +1,7 @@
 module Api
     module V1
         class SkillsController < ApplicationController
+            before_action :authenticate_user!, :only => [:index, :create, :show, :update]
             def index
                 @skills = Skill.all
                 render json: @skills

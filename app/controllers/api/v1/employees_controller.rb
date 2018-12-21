@@ -1,14 +1,17 @@
 module Api
     module V1
         class EmployeesController < ApplicationController
+            before_action :authenticate_user!, :only => [:index, :create, :show, :update]
+
             def index
                 @employees = Employee.all
                 render json: @employees
             end
             def create
-                @employee = Employee.new(employee_params)
+                @employee = Employee.create(employee_params)
                 if @employee.save
-                  render status: :created
+
+                    render status: :created
                 else
                   render json: @employee.errors, status: :unprocessable_entity
                 end
@@ -35,7 +38,7 @@ module Api
             end
             private
             def employee_params
-                params.require(:employee).permit(:id_employee, :name, :age, :job, :adress)
+                params.require(:employee).permit(:key, :name, :age, :job, :adress, skill_ids: [])
             end
         end
     end

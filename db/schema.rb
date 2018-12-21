@@ -57,6 +57,8 @@ ActiveRecord::Schema.define(version: 2018_12_19_194007) do
     t.string "rfc"
     t.string "company"
     t.string "email"
+    t.string "confirm_success_url"
+    t.string "registration"
     t.text "tokens"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
