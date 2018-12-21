@@ -10,7 +10,14 @@ module Api
             def create
                 @employee = Employee.create(employee_params)
                 if @employee.save
+                    employee_params[:skill_ids].each do |id|
+                        @assignment = Assignment.create(employee_id: @employee.id, skill_id: id)
+                        if @assignment.save
 
+                        else
+                            render json: @employee.errors, status: :unprocessable_entity
+                        end
+                    end
                     render status: :created
                 else
                   render json: @employee.errors, status: :unprocessable_entity

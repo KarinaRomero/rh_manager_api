@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_19_194007) do
+ActiveRecord::Schema.define(version: 2018_12_21_105339) do
+
+  create_table "assignments", force: :cascade do |t|
+    t.integer "employee_id"
+    t.integer "skill_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["employee_id"], name: "index_assignments_on_employee_id"
+    t.index ["skill_id"], name: "index_assignments_on_skill_id"
+  end
 
   create_table "employees", force: :cascade do |t|
     t.string "key", null: false
@@ -21,13 +30,6 @@ ActiveRecord::Schema.define(version: 2018_12_19_194007) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["key"], name: "index_employees_on_key", unique: true
-  end
-
-  create_table "employees_skills", id: false, force: :cascade do |t|
-    t.integer "employee_id", null: false
-    t.integer "skill_id", null: false
-    t.index ["employee_id", "skill_id"], name: "index_employees_skills_on_employee_id_and_skill_id"
-    t.index ["skill_id", "employee_id"], name: "index_employees_skills_on_skill_id_and_employee_id"
   end
 
   create_table "skills", force: :cascade do |t|
