@@ -8,16 +8,8 @@ module Api
                 render json: @employees
             end
             def create
-                @employee = Employee.create(employee_params)
+                @employee = Employee.create(key:params[:key], name:params[:name], age:params[:age], job:params[:job], adress:params[:adress], skill_ids:params[:skill_ids])
                 if @employee.save
-                    employee_params[:skill_ids].each do |id|
-                        @assignment = Assignment.create(employee_id: @employee.id, skill_id: id)
-                        if @assignment.save
-
-                        else
-                            render json: @employee.errors, status: :unprocessable_entity
-                        end
-                    end
                     render status: :created
                 else
                   render json: @employee.errors, status: :unprocessable_entity
@@ -42,10 +34,6 @@ module Api
                 else
                   render json: {post: "not found"}, status: :not_found
                 end
-            end
-            private
-            def employee_params
-                params.require(:employee).permit(:key, :name, :age, :job, :adress, skill_ids: [])
             end
         end
     end
