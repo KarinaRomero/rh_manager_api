@@ -5,7 +5,11 @@ module Api
 
             def index
                 @employees = Employee.all
-                render json: @employees
+                @employees.each do |employee|
+                    @skills =  Skill.joins(:employees)
+                    employee.skills = @skills
+                end
+                render json: @employees.as_json(include: :skills)
             end
             def create
                 @employee = Employee.create(key:params[:key], name:params[:name], age:params[:age], job:params[:job], adress:params[:adress], skill_ids:params[:skill_ids])
