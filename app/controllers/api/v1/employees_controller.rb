@@ -17,7 +17,12 @@ module Api
             end
             def show
                 @employee = Employee.find(params[:id])
-                render json: @employee
+                if @employee
+                    @skills =  Skill.joins(:employees)
+                    @employee.skills = @skills
+                end
+                render json: @employee.as_json(include: :skills)
+
             end
             def update
                 @employee = Employee.find(params[:id])
@@ -38,3 +43,4 @@ module Api
         end
     end
 end
+
